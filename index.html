@@ -1,13 +1,4 @@
-<!doctype html>
-<html lang="pt">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#001B30">
-<style>[hidden]{display:none!important}</style>
-</head>
-<body>
-<title>RIKO</title>
+<!doctype html><html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#001B30"><style>[hidden]{display:none!important}</style></head><body><title>RIKO</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -494,10 +485,70 @@ section.card.c-total{border-color:#00477A}
 .tot-item.neg{border-left:3px solid #C16333}
 .tot-item.pos{border-left:3px solid #5A93C6}
 .tot-val{font-family:var(--display);font-size:1.35rem;overflow-wrap:anywhere}
+/* Página de conta (entrar / criar conta) */
+.conta{display:flex;flex-direction:column;align-items:center;gap:22px;max-width:420px;width:100%;margin:0 auto;padding-top:min(10vh,72px)}
+.conta-marca{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.conta-marca span{font-family:var(--display);font-size:3.4rem;letter-spacing:.18em;margin-right:-.18em;line-height:1;color:#FFFFFF}
+.conta-marca p{margin:0;color:rgba(255,255,255,.75);font-size:.95rem}
+.conta-card{width:100%;gap:16px!important}
+.conta-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:12px;background:#001F36;border:1px solid #0B4A75}
+.conta-tabs button{border:none!important;background:transparent!important;color:rgba(255,255,255,.7)!important;padding:9px 10px;border-radius:9px;font-weight:600;box-shadow:none!important}
+.conta-tabs button[aria-selected="true"]{background:#00477A!important;color:#FFFFFF!important}
+#formConta{display:flex;flex-direction:column;gap:14px;border-top:none!important;padding-top:0!important}
+#formConta h2{font-size:1.45rem}
+#formConta .sub{margin:-8px 0 0}
+#formConta .campo{font-size:.85rem;color:rgba(255,255,255,.85);flex:none}
+#formConta .campo input{font-size:1rem;padding:11px 12px;background:#001F36;border-color:#0B4A75;color:#FFFFFF}
+#formConta .campo input:focus{border-color:#FFFFFF}
+.senha-wrap{position:relative;display:block}
+.senha-wrap input{padding-right:84px!important}
+.ver-senha{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none!important;background:transparent!important;box-shadow:none!important;color:#FFFFFF!important;font-size:.8rem;font-weight:600;padding:6px 8px;text-decoration:underline;text-underline-offset:3px}
+.conta-dica{font-size:.75rem;font-weight:400;color:rgba(255,255,255,.6)}
+.conta-disp{font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.conta-disp::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.conta-disp.ok{color:#8FD9B6}
+.conta-disp.nao{color:#F0A27E}
+.conta-disp.a-ver{color:rgba(255,255,255,.65)}
+#ctUser.nao{border-color:#C16333!important}
+#ctUser.ok{border-color:#8FD9B6!important}
+.conta-erro{background:rgba(193,99,51,.18);border:1px solid #C16333;color:#FFFFFF;border-radius:10px;padding:9px 12px;font-size:.88rem}
+.conta-btn{width:100%;padding:12px 16px!important;font-size:1rem;background:#FFFFFF!important;border-color:#FFFFFF!important;color:#003153!important;font-weight:600}
+.conta-btn:hover{background:#E7EDF3!important}
+.conta-btn[disabled]{opacity:.6;cursor:wait}
+.conta-troca{margin:0;text-align:center;font-size:.9rem;color:rgba(255,255,255,.75)}
+.conta-troca .link{color:#FFFFFF!important;font-weight:600;text-decoration:underline;text-underline-offset:3px;font-size:.9rem}
+.conta-nota{margin:0;text-align:center;font-size:.78rem;color:rgba(255,255,255,.55);max-width:340px}
+#btnSair{background:transparent!important;border-color:transparent!important;box-shadow:none!important;color:#FFFFFF!important;font-weight:500}
+#btnSair:hover{text-decoration:underline;text-underline-offset:4px}
+#paginaPainel > header{position:relative}
+#btnSair{position:absolute;top:0;right:0;font-size:.85rem;padding:6px 4px;opacity:.85}
+#btnSair:hover{opacity:1}
+.utilizador{font-size:.85rem;color:rgba(255,255,255,.7);padding:0 4px}
 </style>
 
 <div class="wrap">
   <p class="sub" id="carregando">A carregar…</p>
+
+  <section id="paginaConta" class="conta" hidden>
+    <div class="conta-marca"><span>RIKO</span><p>Pra você alcançar suas metas</p></div>
+    <div class="passo-card conta-card">
+      <div class="conta-tabs" role="tablist" aria-label="Conta">
+        <button type="button" role="tab" id="tabEntrar" aria-selected="true">Entrar</button>
+        <button type="button" role="tab" id="tabCriar" aria-selected="false">Criar conta</button>
+      </div>
+      <form id="formConta" novalidate>
+        <h2 id="contaTit">Bem-vindo de volta</h2>
+        <p class="sub" id="contaSub">Entre com o seu nome de usuário e senha.</p>
+        <label class="campo" for="ctUser"><span id="lblUser">Nome de usuário</span><input id="ctUser" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="20" placeholder="ex.: savio"><span class="conta-dica" id="dicaUser" hidden>3 a 20 caracteres, sem espaços: letras, números, ponto, hífen ou _</span><span class="conta-disp" id="dispUser" role="status" aria-live="polite" hidden></span></label>
+        <label class="campo" for="ctPass">Senha<span class="senha-wrap"><input id="ctPass" type="password" autocomplete="current-password" placeholder="A sua senha"><button type="button" class="ver-senha" id="verSenha" aria-controls="ctPass">Mostrar</button></span></label>
+        <label class="campo" for="ctPass2" id="campoPass2" hidden>Repetir senha<input id="ctPass2" type="password" autocomplete="new-password" placeholder="Escreva a senha outra vez"></label>
+        <div class="conta-erro" id="contaErro" role="alert" hidden></div>
+        <button type="submit" class="btn-primary conta-btn" id="contaBtn">Entrar</button>
+        <p class="conta-troca"><span id="trocaTxt">Ainda não tem conta?</span> <button type="button" class="link" id="trocaBtn">Criar conta</button></p>
+      </form>
+    </div>
+    <p class="conta-nota" id="contaNota"></p>
+  </section>
 
   <section id="paginaInicio" class="inicio" hidden>
     <div class="inicio-hero">
@@ -573,6 +624,7 @@ section.card.c-total{border-color:#00477A}
       <button class="icon" id="next" aria-label="Mês seguinte" hidden>›</button>
       <button id="hoje" hidden>Hoje</button>
       <button id="btnConfig" class="btn-config">Configurações</button>
+      <button id="btnSair" class="btn-config" title="Sair da conta">Sair</button>
     </div>
   </header>
 
@@ -1275,6 +1327,7 @@ section.card.c-total{border-color:#00477A}
   const TOTAL_PASSOS = 3;
   function mostrar(p){
     pagina = p; $('carregando').hidden = true;
+    $('paginaConta').hidden = p!=='conta';
     $('paginaInicio').hidden = p!=='inicio';
     $('paginaPainel').hidden = p!=='painel';
     if(p==='inicio'){ preencherInicio(true); irPasso(0); }
@@ -1525,8 +1578,8 @@ section.card.c-total{border-color:#00477A}
   const onErr = () => showErr('Ligação aos dados perdida. Recarregue a página.');
 
   // ---------- guardar no próprio navegador (quando aberto fora do claude.ai) ----------
-  function criarDbLocal(){
-    const KEY='riko-dados';
+  function criarDbLocal(KEY){
+    KEY=KEY||'riko-dados';
     let dados={}; try{ dados=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){}
     const ouvintes=new Set();
     const copia=o=>JSON.parse(JSON.stringify(o));
@@ -1545,6 +1598,7 @@ section.card.c-total{border-color:#00477A}
       where:(k,op,v)=>colRef(col,(filtros||[]).concat([[k,v]])),
       doc:id=>docRef(col+'/'+(id||gerarId())),
       add:async d=>{ const id=gerarId(); dados[col+'/'+id]=copia(d); gravar(); return docRef(col+'/'+id); },
+      get:async()=>{ const docs=Object.keys(dados).filter(p=>p.startsWith(col+'/') && p.split('/').length===col.split('/').length+1).map(p=>({id:p.split('/').pop(), exists:true, data:()=>dados[p]})); return {docs,size:docs.length,empty:!docs.length}; },
       onSnapshot:n=>{
         const f=()=>{ const docs=Object.keys(dados).filter(p=>p.startsWith(col+'/') && p.split('/').length===col.split('/').length+1 && (filtros||[]).every(([k,v])=>dados[p][k]===v)).map(p=>({id:p.split('/').pop(), exists:true, data:()=>dados[p]})); n({docs, size:docs.length, empty:!docs.length}); };
         ouvintes.add(f); setTimeout(f,0); return ()=>ouvintes.delete(f);
@@ -1553,27 +1607,283 @@ section.card.c-total{border-color:#00477A}
     return { doc:docRef, collection:c=>colRef(c) };
   }
 
+  // ---------- Supabase (guardar os dados na nuvem) ----------
+  // Cole aqui os dados do seu projeto Supabase (Project Settings → API).
+  // A chave "anon public" pode ficar no site: a segurança vem das regras (RLS) criadas pelo supabase.sql.
+  const SUPABASE_URL = 'https://ijishagtqlvrwxsouopi.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlqaXNoYWd0cWx2cnd4c291b3BpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0MzY4MjUsImV4cCI6MjEwODAxMjgyNX0.SYJ2oktInh1BcDOmeDF2wimkmQrVZF6dVmEn_xFtops';
+  const SUPA_TABELA = 'riko_docs';
+  const supaConfigurado = () => /^https:\/\/[^\s]+$/.test(SUPABASE_URL.trim()) && SUPABASE_ANON_KEY.trim().length>20;
+  let supa = null;
+  function carregarScript(src){ return new Promise((ok,falha)=>{ const s=document.createElement('script'); s.src=src; s.onload=ok; s.onerror=()=>falha(new Error('script')); document.head.appendChild(s); }); }
+  async function iniciarSupabase(){
+    if(!(window.supabase && window.supabase.createClient)) await carregarScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js');
+    supa = window.supabase.createClient(SUPABASE_URL.trim(), SUPABASE_ANON_KEY.trim(), { auth:{ persistSession:true, autoRefreshToken:true } });
+  }
+  // Mesma interface que a base local (doc / collection / onSnapshot), guardada numa tabela do Supabase:
+  // cada linha é um documento (user_id, path, col, data). Só o dono da conta lê e escreve as suas linhas.
+  function criarDbSupabase(cliente, userId){
+    const dados = new Map(), ouvintes = new Set();
+    let pronto = false;
+    const copia = o => JSON.parse(JSON.stringify(o));
+    const gerarId = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+    const pai = p => p.split('/').slice(0,-1).join('/');
+    const avisar = () => { if(pronto) ouvintes.forEach(f=>{ try{ f(); }catch(e){} }); };
+    const snapDoc = p => ({ id:p.split('/').pop(), exists:dados.has(p), data:()=>dados.get(p) });
+    const snapCol = col => { const docs=[...dados.keys()].filter(p=>pai(p)===col).map(snapDoc); return { docs, size:docs.length, empty:!docs.length }; };
+    async function escrever(path, data){
+      const { error } = await cliente.from(SUPA_TABELA).upsert({ user_id:userId, path, col:pai(path), data, updated_at:new Date().toISOString() }, { onConflict:'user_id,path' });
+      if(error) throw error;
+      dados.set(path, data); avisar();
+    }
+    async function apagar(path){
+      const { error } = await cliente.from(SUPA_TABELA).delete().eq('user_id', userId).eq('path', path);
+      if(error) throw error;
+      dados.delete(path); avisar();
+    }
+    const carregado = (async()=>{
+      for(let de=0;;de+=1000){
+        const { data, error } = await cliente.from(SUPA_TABELA).select('path,data').eq('user_id', userId).order('path').range(de, de+999);
+        if(error) throw error;
+        (data||[]).forEach(r=>dados.set(r.path, r.data));
+        if(!data || data.length<1000) break;
+      }
+      pronto = true; avisar();
+    })();
+    const ouvir = (f) => { ouvintes.add(f); if(pronto) setTimeout(f,0); return ()=>ouvintes.delete(f); };
+    const docRef = path => ({
+      id:path.split('/').pop(), path,
+      get: async()=>{ await carregado; return snapDoc(path); },
+      set: async d => escrever(path, copia(d)),
+      update: async d => { await carregado; if(!dados.has(path)) throw { code:'not_found' }; return escrever(path, Object.assign(copia(dados.get(path)), copia(d))); },
+      delete: async()=>apagar(path),
+      onSnapshot: n => ouvir(()=>n(snapDoc(path)))
+    });
+    const colRef = col => ({
+      path:col,
+      doc: id => docRef(col+'/'+(id||gerarId())),
+      add: async d => { const p=col+'/'+gerarId(); await escrever(p, copia(d)); return docRef(p); },
+      get: async()=>{ await carregado; return snapCol(col); },
+      onSnapshot: n => ouvir(()=>n(snapCol(col)))
+    });
+    // Tempo real: o que muda noutro telemóvel ou computador aparece aqui sozinho.
+    const canal = cliente.channel('riko-'+userId)
+      .on('postgres_changes', { event:'INSERT', schema:'public', table:SUPA_TABELA, filter:'user_id=eq.'+userId }, pl=>{ const r=pl.new; if(r && r.user_id===userId){ dados.set(r.path, r.data); avisar(); } })
+      .on('postgres_changes', { event:'UPDATE', schema:'public', table:SUPA_TABELA, filter:'user_id=eq.'+userId }, pl=>{ const r=pl.new; if(r && r.user_id===userId){ dados.set(r.path, r.data); avisar(); } })
+      .on('postgres_changes', { event:'DELETE', schema:'public', table:SUPA_TABELA }, pl=>{ const o=pl.old||{}; if(o.user_id===userId && dados.has(o.path)){ dados.delete(o.path); avisar(); } })
+      .subscribe();
+    return { doc:docRef, collection:colRef, carregado, fechar:()=>{ try{ cliente.removeChannel(canal); }catch(e){} } };
+  }
+
   render();
-  const setDisabled = v => document.querySelectorAll('input,select,form button').forEach(el=>el.disabled=v);
+  const setDisabled = v => document.querySelectorAll('#paginaPainel input,#paginaPainel select,#paginaPainel form button,#paginaInicio input,#paginaInicio select,#paginaInicio form button').forEach(el=>el.disabled=v);
   setDisabled(true);
+
+  // ---------- contas (nome de usuário + senha) ----------
+  const COLS = ['guardado','retiradas','metas','fixas','meses','avulsas','extras'];
+  const ESTADO_VAZIO = JSON.stringify({ padrao:{}, mesDoc:{}, fixas:[], avulsas:[], extras:[], guardado:[], guardadoTodos:[], metas:[], retiradas:[], setup:{}, mesesTodos:{}, avulsasTodas:[], extrasTodos:[] });
+  let dbBase = null, modoLocal = false, modoSupa = false, utilizador = null, desligar = [], modoConta = 'entrar';
+  const emailValido = e => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+  function prepararContaSupa(){
+    const inp=$('ctUser');
+    $('lblUser').textContent='Email';
+    inp.type='email'; inp.removeAttribute('maxlength'); inp.setAttribute('autocomplete','email'); inp.placeholder='ex.: nome@email.com';
+  }
+  async function entrarSupa(user){
+    const sdb = criarDbSupabase(supa, user.id);
+    try{ await sdb.carregado; }catch(e){ sdb.fechar(); throw e; }
+    entrarConta(user.email || 'conta', sdb);
+  }
+  function msgSupa(err){
+    const m = String((err && (err.message||err.error_description)) || '').toLowerCase();
+    if(m.includes('invalid login')) return 'Email ou senha errados.';
+    if(m.includes('not confirmed')) return 'Ainda não confirmou o email. Abra o link que recebeu e depois entre aqui.';
+    if(m.includes('already registered') || m.includes('already been registered')) return 'Já existe uma conta com este email. Entre em vez de criar.';
+    if(m.includes('password')) return 'A senha não foi aceite. Use pelo menos 6 caracteres.';
+    if(m.includes('rate limit') || m.includes('too many')) return 'Muitas tentativas seguidas. Espere um pouco e tente outra vez.';
+    if(m.includes('relation') || m.includes('does not exist') || m.includes('schema cache')) return 'A tabela do RIKO ainda não existe no Supabase. Corra o ficheiro supabase.sql no SQL Editor.';
+    if(m.includes('fetch') || m.includes('network')) return 'Sem ligação ao Supabase. Verifique a internet e o endereço do projeto.';
+    return 'Não foi possível ligar. Tente outra vez.';
+  }
+  const SESSAO = 'riko-sessao';
+  const lerSessao = () => { try{ return localStorage.getItem(SESSAO); }catch(e){ return null; } };
+  const gravarSessao = u => { try{ if(u) localStorage.setItem(SESSAO,u); else localStorage.removeItem(SESSAO); }catch(e){} };
+  const normUser = u => (u||'').trim().toLowerCase();
+  const userValido = u => /^[a-z0-9._-]{3,20}$/.test(u) && u!=='.' && u!=='..';
+  async function hashSenha(senha, sal){
+    const dados = new TextEncoder().encode(sal+':'+senha);
+    if(window.crypto && crypto.subtle){ const h = await crypto.subtle.digest('SHA-256', dados); return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+    let h=5381; for(const b of dados) h=((h<<5)+h+b)>>>0; return 'x'+h.toString(16);
+  }
+  const novoSal = () => Array.from((window.crypto&&crypto.getRandomValues)?crypto.getRandomValues(new Uint8Array(12)):[...Array(12)].map(()=>Math.random()*256|0)).map(b=>(b&255).toString(16).padStart(2,'0')).join('');
+  // onde ficam as contas: no claude.ai, na base partilhada; fora dele, neste navegador
+  const lerContasLocais = () => { try{ return JSON.parse(localStorage.getItem('riko-contas')||'{}')||{}; }catch(e){ return {}; } };
+  async function lerConta(u){
+    if(modoLocal) return lerContasLocais()[u] || null;
+    const d = await dbBase.doc('contas/'+u).get(); return d.exists ? d.data() : null;
+  }
+  async function haContas(){
+    if(modoLocal) return Object.keys(lerContasLocais()).length>0;
+    const q = await dbBase.collection('contas').get(); return !q.empty;
+  }
+  async function gravarConta(u, reg){
+    if(modoLocal){ const c=lerContasLocais(); c[u]=reg; localStorage.setItem('riko-contas', JSON.stringify(c)); return; }
+    await dbBase.doc('contas/'+u).set(reg);
+  }
+  // a primeira conta criada fica com os dados que já existiam antes das contas
+  async function migrarDadosAntigos(u){
+    if(modoLocal){ try{ const v=localStorage.getItem('riko-dados'); if(v && !localStorage.getItem('riko-dados-'+u)){ localStorage.setItem('riko-dados-'+u, v); } }catch(e){} return; }
+    for(const path of ['config/setup','config/padrao']){ const d=await dbBase.doc(path).get(); if(d.exists) await dbBase.doc('contas/'+u+'/'+path).set(d.data()); }
+    for(const c of COLS){ const q=await dbBase.collection(c).get(); for(const d of q.docs) await dbBase.doc('contas/'+u+'/'+c+'/'+d.id).set(d.data()); }
+  }
+  function dbDaConta(u){
+    if(modoLocal) return criarDbLocal('riko-dados-'+u);
+    const pre = 'contas/'+u+'/';
+    return { doc:p=>dbBase.doc(pre+p), collection:c=>dbBase.collection(pre+c) };
+  }
+  function limparEstado(){ const v=JSON.parse(ESTADO_VAZIO); Object.keys(v).forEach(k=>{ st[k]=v[k]; }); }
+  function entrarConta(u, dbPronto){
+    utilizador = u; if(!dbPronto) gravarSessao(u);
+    desligar.forEach(f=>{ try{ f&&f(); }catch(e){} }); desligar=[];
+    if(db && db.fechar) db.fechar();
+    limparEstado(); db = dbPronto || dbDaConta(u); pagina = null; setDisabled(false);
+    const ouvir = r => desligar.push(r);
+    ouvir(db.doc('config/padrao').onSnapshot(s=>{ st.padrao = s.exists ? Object.assign({},s.data()) : {}; render(); }, onErr));
+    ouvir(db.doc('config/setup').onSnapshot(s=>{ st.setup = s.exists ? Object.assign({},s.data()) : {}; if(!pagina) mostrar(st.setup.concluido ? 'painel' : 'inicio'); render(); }, onErr));
+    ouvir(db.collection('guardado').onSnapshot(s=>{ st.guardadoTodos = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr));
+    ouvir(db.collection('retiradas').onSnapshot(s=>{ st.retiradas = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr));
+    ouvir(db.collection('metas').onSnapshot(s=>{ st.metas = s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(a.criado||0)-(b.criado||0)); render(); }, onErr));
+    ouvir(db.collection('fixas').onSnapshot(s=>{ st.fixas = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr));
+    ouvir(db.collection('meses').onSnapshot(s=>{ const o={}; s.docs.forEach(d=>{ o[d.id]=d.data(); }); st.mesesTodos=o; render(); }, onErr));
+    ouvir(db.collection('avulsas').onSnapshot(s=>{ st.avulsasTodas = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr));
+    ouvir(db.collection('extras').onSnapshot(s=>{ st.extrasTodos = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr));
+  }
+  function sair(){
+    desligar.forEach(f=>{ try{ f&&f(); }catch(e){} }); desligar=[];
+    const eraSupa = modoSupa && utilizador;
+    if(db && db.fechar) db.fechar();
+    utilizador=null; gravarSessao(null); db=null; limparEstado(); setDisabled(true);
+    if(eraSupa) supa.auth.signOut().catch(()=>{});
+    $('formConta').reset(); mostrarDisp(''); modoContaSet('entrar'); mostrar('conta'); render();
+  }
+  function erroConta(t){ $('contaErro').textContent=t||''; $('contaErro').hidden=!t; }
+  function modoContaSet(m){
+    modoConta = m; const criar = m==='criar';
+    $('tabEntrar').setAttribute('aria-selected', String(!criar));
+    $('tabCriar').setAttribute('aria-selected', String(criar));
+    $('contaTit').textContent = criar ? 'Crie a sua conta' : 'Bem-vindo de volta';
+    $('contaSub').textContent = modoSupa
+      ? (criar ? 'Use o seu email e escolha uma senha. Os dados ficam guardados na nuvem e aparecem em qualquer aparelho.' : 'Entre com o seu email e senha.')
+      : (criar ? 'Escolha um nome de usuário e uma senha. Os seus dados ficam guardados nesta conta.' : 'Entre com o seu nome de usuário e senha.');
+    $('campoPass2').hidden = !criar; $('dicaUser').hidden = !criar || modoSupa; verDisponivel();
+    $('ctPass').setAttribute('autocomplete', criar ? 'new-password' : 'current-password');
+    $('ctPass').placeholder = criar ? 'Mínimo 6 caracteres' : 'A sua senha';
+    $('contaBtn').textContent = criar ? 'Criar conta' : 'Entrar';
+    $('trocaTxt').textContent = criar ? 'Já tem conta?' : 'Ainda não tem conta?';
+    $('trocaBtn').textContent = criar ? 'Entrar' : 'Criar conta';
+    erroConta('');
+  }
+  $('tabEntrar').addEventListener('click',()=>{ modoContaSet('entrar'); $('ctUser').focus(); });
+  $('tabCriar').addEventListener('click',()=>{ modoContaSet('criar'); $('ctUser').focus(); });
+  $('trocaBtn').addEventListener('click',()=>{ modoContaSet(modoConta==='criar'?'entrar':'criar'); $('ctUser').focus(); });
+  // nome de usuário: sem espaços e verificação na base de dados enquanto escreve
+  let dispTimer = null, dispSeq = 0;
+  function mostrarDisp(classe, texto){
+    const el=$('dispUser'), inp=$('ctUser');
+    el.hidden = !classe; el.className = 'conta-disp' + (classe ? ' '+classe : ''); el.textContent = texto||'';
+    inp.classList.toggle('nao', classe==='nao'); inp.classList.toggle('ok', classe==='ok');
+  }
+  function verDisponivel(){
+    clearTimeout(dispTimer); const seq = ++dispSeq;
+    const u = normUser($('ctUser').value);
+    if(modoConta!=='criar' || !u || modoSupa){ mostrarDisp(''); return; }
+    if(u.length<3){ mostrarDisp('a-ver','Mínimo 3 caracteres'); return; }
+    if(!userValido(u)){ mostrarDisp('nao','Use só letras, números, ponto, hífen ou _'); return; }
+    mostrarDisp('a-ver','A verificar…');
+    dispTimer = setTimeout(async ()=>{
+      try{ const existe = !!(await lerConta(u)); if(seq!==dispSeq) return;
+        mostrarDisp(existe?'nao':'ok', existe ? 'Este nome de usuário já está a ser usado. Escolha outro.' : 'Nome de usuário disponível'); }
+      catch(e){ if(seq===dispSeq) mostrarDisp(''); }
+    }, 350);
+  }
+  $('ctUser').addEventListener('input', ()=>{
+    const el=$('ctUser'), v=el.value;
+    if(/\s/.test(v)){ const pos=el.selectionStart - (v.slice(0,el.selectionStart).match(/\s/g)||[]).length; el.value=v.replace(/\s+/g,''); try{ el.setSelectionRange(pos,pos); }catch(e){} if(modoConta==='criar') { erroConta('O nome de usuário não pode ter espaços.'); } }
+    else if($('contaErro').textContent.includes('espaços')) erroConta('');
+    verDisponivel();
+  });
+  $('ctUser').addEventListener('keydown', e=>{ if(e.key===' ' && modoConta==='criar'){ e.preventDefault(); erroConta('O nome de usuário não pode ter espaços.'); } });
+  $('verSenha').addEventListener('click',()=>{ const v=$('ctPass').type==='password'; $('ctPass').type=v?'text':'password'; $('ctPass2').type=v?'text':'password'; $('verSenha').textContent=v?'Esconder':'Mostrar'; });
+  $('btnSair').addEventListener('click', sair);
+  $('formConta').addEventListener('submit', async ev=>{
+    ev.preventDefault();
+    const u = normUser($('ctUser').value), pw = $('ctPass').value, pw2 = $('ctPass2').value;
+    if(modoSupa){
+      if(!emailValido(u)){ erroConta('Escreva um email válido (ex.: nome@email.com).'); $('ctUser').focus(); return; }
+      if(!pw){ erroConta('Escreva a senha.'); $('ctPass').focus(); return; }
+      if(modoConta==='criar' && pw.length<6){ erroConta('A senha precisa de pelo menos 6 caracteres.'); $('ctPass').focus(); return; }
+      if(modoConta==='criar' && pw!==pw2){ erroConta('As duas senhas não são iguais.'); $('ctPass2').focus(); return; }
+      const btn=$('contaBtn'); btn.disabled=true; erroConta('');
+      try{
+        const r = modoConta==='criar'
+          ? await supa.auth.signUp({ email:u, password:pw })
+          : await supa.auth.signInWithPassword({ email:u, password:pw });
+        if(r.error){ erroConta(msgSupa(r.error)); return; }
+        if(modoConta==='criar' && r.data && r.data.user && Array.isArray(r.data.user.identities) && !r.data.user.identities.length){ erroConta('Já existe uma conta com este email. Entre em vez de criar.'); return; }
+        if(!r.data || !r.data.session){ modoContaSet('entrar'); $('ctUser').value=u; erroConta('Conta criada. Enviámos um email de confirmação para '+u+': abra o link e depois entre aqui.'); return; }
+        await entrarSupa(r.data.session.user);
+        $('formConta').reset();
+      }catch(e){ erroConta(msgSupa(e)); }
+      finally{ btn.disabled=false; }
+      return;
+    }
+    if(!u){ erroConta('Escreva o nome de usuário.'); $('ctUser').focus(); return; }
+    if(modoConta==='criar' && !userValido(u)){ erroConta('O nome de usuário deve ter 3 a 20 caracteres: letras, números, ponto, hífen ou _ (sem espaços).'); $('ctUser').focus(); return; }
+    if(!pw){ erroConta('Escreva a senha.'); $('ctPass').focus(); return; }
+    if(modoConta==='criar' && pw.length<6){ erroConta('A senha precisa de pelo menos 6 caracteres.'); $('ctPass').focus(); return; }
+    if(modoConta==='criar' && pw!==pw2){ erroConta('As duas senhas não são iguais.'); $('ctPass2').focus(); return; }
+    const btn=$('contaBtn'); btn.disabled=true; erroConta('');
+    try{
+      if(modoConta==='criar'){
+        if(await lerConta(u)){ erroConta('Este nome de usuário já está a ser usado. Escolha outro.'); mostrarDisp('nao','Este nome de usuário já está a ser usado. Escolha outro.'); $('ctUser').focus(); $('ctUser').select(); return; }
+        const primeira = !(await haContas());
+        const sal = novoSal();
+        await gravarConta(u, {sal, hash: await hashSenha(pw, sal), criado: Date.now()});
+        if(primeira) await migrarDadosAntigos(u);
+        entrarConta(u);
+      } else {
+        const c = userValido(u) ? await lerConta(u) : null;
+        if(!c || c.hash !== await hashSenha(pw, c.sal)){ erroConta('Nome de usuário ou senha errados.'); $('ctPass').select(); return; }
+        entrarConta(u);
+      }
+      $('formConta').reset(); mostrarDisp('');
+    }catch(e){ erroConta('Não foi possível ligar. Tente outra vez.'); }
+    finally{ btn.disabled=false; }
+  });
+
   (async()=>{
     const temClaude = !!(window.claude && window.claude.use);
-    db = temClaude ? await window.claude.use('db') : null;
-    if(!db && !temClaude) db = criarDbLocal();
-    if(!db){ $('status').textContent='Abra com a sua conta para ver e guardar os dados.'; mostrar('painel'); return; }
-    setDisabled(false);
-    db.doc('config/padrao').onSnapshot(s=>{ st.padrao = s.exists ? Object.assign({},s.data()) : {}; render(); }, onErr);
-    db.doc('config/setup').onSnapshot(s=>{ st.setup = s.exists ? Object.assign({},s.data()) : {}; if(!pagina) mostrar(st.setup.concluido ? 'painel' : 'inicio'); render(); }, onErr);
-    db.collection('guardado').onSnapshot(s=>{ st.guardadoTodos = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr);
-    db.collection('retiradas').onSnapshot(s=>{ st.retiradas = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr);
-    db.collection('metas').onSnapshot(s=>{ st.metas = s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(a.criado||0)-(b.criado||0)); render(); }, onErr);
-    db.collection('fixas').onSnapshot(s=>{ st.fixas = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr);
-    db.collection('meses').onSnapshot(s=>{ const o={}; s.docs.forEach(d=>{ o[d.id]=d.data(); }); st.mesesTodos=o; render(); }, onErr);
-    db.collection('avulsas').onSnapshot(s=>{ st.avulsasTodas = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr);
-    db.collection('extras').onSnapshot(s=>{ st.extrasTodos = s.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }, onErr);
+    dbBase = temClaude ? await window.claude.use('db') : null;
+    if(!temClaude && supaConfigurado()){
+      modoSupa = true; prepararContaSupa();
+      try{ await iniciarSupabase(); }
+      catch(e){ modoContaSet('entrar'); mostrar('conta'); erroConta('Não foi possível carregar o Supabase. Verifique a internet e recarregue a página.'); $('contaBtn').disabled=true; return; }
+      $('contaNota').textContent = 'Os seus dados ficam guardados na nuvem (Supabase). Quem entrar com a mesma conta vê os mesmos dados.';
+      supa.auth.onAuthStateChange(ev=>{ if(ev==='SIGNED_OUT' && utilizador) sair(); });
+      try{
+        const { data } = await supa.auth.getSession();
+        if(data && data.session){ await entrarSupa(data.session.user); return; }
+      }catch(e){ modoContaSet('entrar'); mostrar('conta'); erroConta(msgSupa(e)); return; }
+      modoContaSet('entrar'); mostrar('conta'); return;
+    }
+    if(!dbBase && !temClaude) modoLocal = true;
+    if(!dbBase && !modoLocal){ $('status').textContent='Abra com a sua conta para ver e guardar os dados.'; mostrar('painel'); return; }
+    $('contaNota').textContent = modoLocal ? 'Por agora, as contas ficam guardadas neste navegador.' : '';
+    const sess = normUser(lerSessao());
+    let ok = false;
+    try{ ok = !!(sess && userValido(sess) && await lerConta(sess)); }catch(e){}
+    if(ok) entrarConta(sess); else { modoContaSet((await haContas().catch(()=>true)) ? 'entrar' : 'criar'); mostrar('conta'); }
   })();
 })();
 </script>
-
-</body>
-</html>
+</body></html>
